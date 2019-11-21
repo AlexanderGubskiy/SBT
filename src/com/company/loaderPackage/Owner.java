@@ -3,7 +3,7 @@ package com.company.loaderPackage;
 import java.lang.reflect.Field;
 
 public class Owner {
-    private long finance;
+    private Integer finance;
     private String firstName;
     private String lastName;
 
@@ -23,11 +23,11 @@ public class Owner {
         lastName = lastName;
     }
 
-    public long getFinance() {
+    public Integer getFinance() {
         return finance;
     }
 
-    public void setFinance(long finance) {
+    public void setFinance(Integer finance) {
         this.finance = finance;
     }
 

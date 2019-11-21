@@ -9,5 +9,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.FIELD)
 public @interface Marker {
     String name();
-    String value() default "defaultStringValue";
+    String[] value() default {};//Альтернатива значению null (оно невозможно т.к требует константу)
 }

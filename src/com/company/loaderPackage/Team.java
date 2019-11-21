@@ -2,47 +2,36 @@ package com.company.loaderPackage;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Properties;
 import java.util.logging.Logger;
 
 public class Team {
     private RipperOfClass ripper;
-    private Map<String, String> map;
     private static volatile Team instance;
     private static final Logger logger = Logger.getLogger(Team.class.getName());
-    private String propertyNameFile = "goldenStateWarriors.properties";
+    private String propertyNameFile;
 
-    @Marker(name = "Team.ch", value = "g")
-    private char ch;
-    @Marker(name = "character")
-    private Character character;
-    @Marker(name = "Team.Integer", value = "123")
+    @Marker(name = "Team.Integer")
     private Integer Integer;
-    @Marker(name = "Team.Double", value = "11.7")
+    @Marker(name = "Team.Double")
     private Double Double;
-    @Marker(name = "Boolean", value = "true")
-    private Boolean Boolean;
     @Marker(name = "Team.name")
     private String name;
     @Marker(name = "Team.owner")
     private Owner owner;
     @Marker(name = "Team.budget")
-    private long budget;
+    private Integer budget;
     @Marker(name = "Team.stadium")
     private Stadium stadium;
-    @Marker(name = "Team.secstadium")
+    @Marker(name = "Team.secStadium", value = "sssd")
     private Stadium secStadium;
     @Marker(name = "Team.league")
     private League league;
-    @Marker(name = "Team.secleague")
+    @Marker(name = "Team.secLeague")
     private League secLeague;
 
     public void setPropertyNameFile(String propertyNameFile) {
         this.propertyNameFile = propertyNameFile;
-        loadProperties();
-
     }
 
     public League getLeague() {
@@ -69,11 +58,11 @@ public class Team {
         this.stadium = stadium;
     }
 
-    public long getBudget() {
+    public double getBudget() {
         return budget;
     }
 
-    public void setBudget(long budget) {
+    public void setBudget(Integer budget) {
         this.budget = budget;
     }
 
@@ -86,17 +75,19 @@ public class Team {
     }
 
     /**
-     * Подгружает параметры из файла, указанного в переменной propertyNameFile
+     * Подгружает параметры из файла, указанного в файле конфигураций
      */
     private void loadProperties() {
-        Properties properties = new Properties();
         try {
+            //определение файла для подкачки параметров
+            FileInputStream configFile = new FileInputStream("config.properties");
+            Properties prop = new Properties();
+            prop.load(configFile);
+            propertyNameFile = prop.getProperty("propertyForLoad");
+            //выгрузка параметров
             FileInputStream in = new FileInputStream(propertyNameFile);
-            properties.load(in);
-            map = new HashMap<String, String>();
-            for (final String key : properties.stringPropertyNames())
-                map.put(key, properties.getProperty(key));
-            ripper = new RipperOfClass(this, map);
+            prop.load(in);
+            ripper = new RipperOfClass(this, prop);
         } catch (IOException e) {
             logger.info("При загрузке полей из файла конфигураций произошла ошибка");
             e.printStackTrace();
@@ -112,8 +103,7 @@ public class Team {
      * Singleton
      */
     public static Team getInstance() {
-        Team res = instance;
-        if (res != null) {
+        if (instance != null) {
             return instance;
         } else {
             synchronized (Team.class) {
@@ -135,11 +125,8 @@ public class Team {
     @Override
     public String toString() {
         return name + " {\n" +
-                "\t\'character\':\'" + character + "\',\n" +
-                "\t\'ch\':\'" + ch + "\',\n" +
                 "\t\'Integer\':\'" + Integer + "\',\n" +
                 "\t\'Double\':\'" + Double + "\',\n" +
-                "\t\'Boolean\':\'" + Boolean + "\',\n" +
                 "\t\'name\':\'" + name + "\'," +
                 " \'budget\':" + budget + "," +
                 " \'league\':" + "\'" + league + "\'" +
