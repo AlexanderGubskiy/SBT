@@ -7,4 +7,4 @@
 ```
 chcp 1251
 ```
-Если во время вызова не был найден/передан файл *.properties по умолчанию будет использоваться goldenStateWarriors.properties 
+ 
