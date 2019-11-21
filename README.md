@@ -1,7 +1,7 @@
 # SE
 Для вызова jar файла необходимо:
 * перейти в корень проекта с помощью cmd;
-* вызвать команду java -jar out/artifacts/_jar/SberTest.jar losAngelesLakers.properties.
+* вызвать команду java -jar out/artifacts/_jar/SberTest.jar 
 
 Для корректного отображения кириллицы необходимо установить соответствующую кодировку с помощью команды 
 ```
